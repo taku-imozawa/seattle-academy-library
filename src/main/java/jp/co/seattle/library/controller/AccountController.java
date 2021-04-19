@@ -63,14 +63,19 @@ public class AccountController {
         boolean isValidPW = password.matches("^[A-Za-z0-9]+$");
         boolean isValidPwForCheck = passwordForCheck.matches("^[A-Za-z0-9]+$");
 
-        if (!(isEmailValid || isValidPW || isValidPwForCheck)) {
-
+        if (!(isEmailValid)) {
+            model.addAttribute("mailError", "有効なメールアドレスを入力してください");
             return "createAccount";
 
         }
+        if (!(isValidPW) || !(isValidPwForCheck)) {
+            model.addAttribute("hannkakuError", "半角英数字で入力してください");
+            return "createAccount";
+        }
+
         if (!password.equals(passwordForCheck)) {
             logger.info("パスワードミス", locale);
-            model.addAttribute("passworderror", "パスワードが違います");
+            model.addAttribute("passworderror", "パスワードが異なります。");
             return "createAccount";
         }
 

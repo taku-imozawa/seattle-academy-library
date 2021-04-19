@@ -27,8 +27,19 @@
                         <div class="title">アカウントの作成</div>
                         <label class="label">メールアドレス</label>
                         <input type="email" class="input" id="email" name="email" autocomplete="off" required>
+                        
+                        <c:if test="${!empty mailError}">
+                        <div class = "error">${mailError}</div>
+                        </c:if>
+                        
                         <label class="label">パスワード</label>
                         <input type="password" class="input" id="password" name="password" required>
+                        
+                        <c:if test="${!empty hannkakuError}">
+                        <div class = "error">${hannkakuError}</div>
+                        </c:if>
+                        
+                        
                         <label class="label">パスワード（確認用）</label>
                         <input type="password" class="input" id="passwordForCheck" name="passwordForCheck" required>
                        
