@@ -32,7 +32,7 @@
             <c:if test="${!empty resultMessage}">
                 <div class="error_msg">${resultMessage}</div>
             </c:if>
-            <div>
+            </div>
                 <div class="booklist">
                     <c:forEach var="bookInfo" items="${bookList}">
                         <div class="books">
@@ -49,6 +49,10 @@
                             </form>
                             <ul>
                                 <li class="book_title">${bookInfo.title}</li>
+                                <li class="book_thumbnail_url">${bookInfo.thumbnail}</li>
+                                <li class="book_publish_date">${bookInfo.publishDate}</li>                                
+                                <li class="book_author">${bookInfo.author}</li>
+                                <li class="book_publisher">${bookInfo.publisher}</li>
                             </ul>
                         </div>
                     </c:forEach>
