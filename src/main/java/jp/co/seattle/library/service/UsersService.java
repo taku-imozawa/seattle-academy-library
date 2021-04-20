@@ -47,10 +47,10 @@ public class UsersService {
         // TODO SQL生成　ユーザーid,email.passwordを探しに行かせる
         String sql = "select id,email,password from users where EMAIL ='" + email + "'and PASSWORD='" + password + "';";
         try {
-                  UserInfo selectedUserInfo = jdbcTemplate.queryForObject(sql, new UserCountRowMapper());
-                    return selectedUserInfo;
-                } catch (EmptyResultDataAccessException e) {
-                    return null;
+            UserInfo selectedUserInfo = jdbcTemplate.queryForObject(sql, new UserCountRowMapper());
+            return selectedUserInfo;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
                 }
 
     }
