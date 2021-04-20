@@ -29,6 +29,10 @@
         <a href="<%= request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
 
         <div class="content_body">
+            <c:if test="${!empty resultMessage}">
+                <div class="error_msg">${resultMessage}</div>
+            </c:if>
+            </div>
                 <div class="booklist">
                     <c:forEach var="bookInfo" items="${bookList}">
                         <div class="books">
