@@ -43,9 +43,8 @@ public class UsersService {
      * @return ユーザー情報
      */
     public UserInfo selectUserInfo(String email, String password) {
-        // TODO SQL生成
-        String sql = "";
-
+        // TODO SQL生成　ユーザーid,email.passwordを探しに行かせる
+        String sql = "select * from users where EMAIL ='" + email + "'and PASSWORD='" + password + "";
         UserInfo selectedUserInfo = jdbcTemplate.queryForObject(sql, new UserCountRowMapper());
         return selectedUserInfo;
 
