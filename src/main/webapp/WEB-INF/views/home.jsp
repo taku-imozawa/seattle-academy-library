@@ -49,7 +49,6 @@
                             </form>
                             <ul>
                                 <li class="book_title">${bookInfo.title}</li>
-                                <li class="book_thumbnail_url">${bookInfo.thumbnail}</li>
                                 <li class="book_publish_date">${bookInfo.publishDate}</li>                                
                                 <li class="book_author">${bookInfo.author}</li>
                                 <li class="book_publisher">${bookInfo.publisher}</li>
