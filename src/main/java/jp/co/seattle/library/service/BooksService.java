@@ -56,6 +56,14 @@ public class BooksService {
         return bookDetailsInfo;
     }
 
+    //bookIdを取得するメソッド
+    //
+    public int getBookId() {
+        String sql = "SELECT MAX(id) FROM books";
+        int getBookId = jdbcTemplate.queryForObject(sql, int.class);
+        return getBookId;
+    }
+
 
 
     /**
@@ -65,10 +73,13 @@ public class BooksService {
      */
     public void registBook(BookDetailsInfo bookInfo) {
 
-        String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url, reg_date,upd_date) VALUES ('"
+        String sql = "INSERT INTO books (title, author,publisher,publish_date,thumbnail_name,thumbnail_url,isbn,description,reg_date,upd_date) VALUES ('"
                 + bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
+                + bookInfo.getPublishDate() + "','"
                 + bookInfo.getThumbnailName() + "','"
-                + bookInfo.getThumbnailUrl() + "',"
+                + bookInfo.getThumbnailUrl() + "','"
+                + bookInfo.getIsbn() + "','"
+                + bookInfo.getDescription() + "',"
                 + "sysdate(),"
                 + "sysdate())";
 
