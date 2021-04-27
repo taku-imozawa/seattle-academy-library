@@ -1,5 +1,8 @@
 package jp.co.seattle.library.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +47,9 @@ public class AddBooksController {
      * @param author 著者名
      * @param publisher 出版社
      * @param file サムネイルファイル
+     * @param description 説明
+     * @param publishDate 出版日
+     * @param isbn ISBN
      * @param model モデル
      * @return 遷移先画面
      */
@@ -53,6 +60,9 @@ public class AddBooksController {
             @RequestParam("author") String author,
             @RequestParam("publisher") String publisher,
             @RequestParam("thumbnail") MultipartFile file,
+            @RequestParam("publishDate") String publishDate,
+            @RequestParam("description")String description, 
+            @RequestParam("isbn") String isbn,
             Model model) {
         logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
@@ -61,6 +71,65 @@ public class AddBooksController {
         bookInfo.setTitle(title);
         bookInfo.setAuthor(author);
         bookInfo.setPublisher(publisher);
+        bookInfo.setPublishDate(publishDate);
+        bookInfo.setIsbn(isbn);
+        bookInfo.setDescription(description);
+
+        //必須項目,タイトル、著者名、出版社、出版日がNULLじゃないか、空文字になっていないかチェックする
+        boolean isTitleValid = !StringUtils.isEmpty(title);
+        boolean isAuthorValid = !StringUtils.isEmpty(author);
+        boolean isPublisherValid = !StringUtils.isEmpty(publisher);
+        boolean isPublishDateValid = !StringUtils.isEmpty(publishDate);
+
+        //出版日がYYYYMMDD形式かどうか。存在する日にちかどうか確認。半角数字
+        boolean isDateValid = publishDate.matches("^[0-9]*$");
+
+        if (!(isTitleValid) || !(isAuthorValid) || !(isPublisherValid) || !(isPublishDateValid)) {
+            model.addAttribute("addError", "必須項目が入力されていません");
+            return "addBook";
+
+        } else if (!(isDateValid)) {
+            model.addAttribute("PublisDateError", "出版日は半角数字で入力してください");
+            return "addBook";
+
+        } else if (isDateValid) {
+            try {
+                DateFormat dt = new SimpleDateFormat("yyyyMMdd");
+                dt.setLenient(false);
+                // ←ここが画面などからの入力値になる
+                dt.parse(publishDate);
+
+            } catch (ParseException p) {
+                model.addAttribute("dateError", "日付が正しくありません");
+                return "addBook";
+            }
+
+
+
+
+
+        }
+
+
+        //ISBNが10or13桁
+        boolean isIsbnValid = !!StringUtils.isEmpty(isbn);
+        //isbnがからじゃなかった時、半角数字かどうかチェック
+        if (isIsbnValid) {
+            boolean isValid = isbn.matches("^[0-9]*$");
+            //isbnが10桁or13桁、半角数字かチェック
+            int isbnNum = isbn.length();
+            if (!isIsbnValid) {
+                model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
+                return "addBook";
+            } else if (isbnNum != 10 || isbnNum != 13) {
+                model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
+                return "addBook";
+            }
+
+            if (isIsbnValid) {
+                return "addBook";
+            }
+        }
 
         // クライアントのファイルシステムにある元のファイル名を設定する
         String thumbnail = file.getOriginalFilename();
@@ -84,12 +153,20 @@ public class AddBooksController {
             }
         }
 
+
         // 書籍情報を新規登録する
         booksService.registBook(bookInfo);
 
         model.addAttribute("resultMessage", "登録完了");
 
         // TODO 登録した書籍の詳細情報を表示するように実装
+        //bookIdを取得するメソッドを使う
+        //        booksService.getBookId();
+        int bookId = booksService.getBookId();
+        //書籍の詳細情報を取得する。 getBookInfo(int bookId)
+
+        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+
         //  詳細画面に遷移する
         return "details";
     }
