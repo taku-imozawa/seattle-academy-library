@@ -1,5 +1,7 @@
 package jp.co.seattle.library.controller;
 
+import static org.hamcrest.CoreMatchers.*;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -88,11 +90,13 @@ public class AddBooksController {
             model.addAttribute("addError", "必須項目が入力されていません");
             return "addBook";
 
-        } else if (!(isDateValid)) {
+        }
+        if (!(isDateValid)) {
             model.addAttribute("PublisDateError", "出版日は半角数字で入力してください");
             return "addBook";
 
-        } else if (isDateValid) {
+        }
+        if (isDateValid) {
             try {
                 DateFormat dt = new SimpleDateFormat("yyyyMMdd");
                 dt.setLenient(false);
@@ -103,11 +107,12 @@ public class AddBooksController {
                 model.addAttribute("dateError", "日付が正しくありません");
                 return "addBook";
             }
+        }
 
-
-
-
-
+        if (isbn != null && !(isbn.isEmpty())
+                && !(isbn.matches("([0-9]{10}|[0-9]{13})?"))) {
+            model.addAttribute("isbnError", "行目のISBNは10桁もしくは13桁の数字で入力してください");
+            return "addBook";
         }
 
 
@@ -118,17 +123,16 @@ public class AddBooksController {
             boolean isValid = isbn.matches("^[0-9]*$");
             //isbnが10桁or13桁、半角数字かチェック
             int isbnNum = isbn.length();
-            if (!isIsbnValid) {
+            if (!isValid) {
                 model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
                 return "addBook";
-            } else if (isbnNum != 10 || isbnNum != 13) {
+            }
+            if (isbnNum != 10 || isbnNum != 13) {
                 model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
                 return "addBook";
             }
 
-            if (isIsbnValid) {
-                return "addBook";
-            }
+
         }
 
         // クライアントのファイルシステムにある元のファイル名を設定する
