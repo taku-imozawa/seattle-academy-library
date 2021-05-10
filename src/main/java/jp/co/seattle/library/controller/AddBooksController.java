@@ -68,6 +68,7 @@ public class AddBooksController {
 
         // パラメータで受け取った書籍情報をDtoに格納する。
         BookDetailsInfo bookInfo = new BookDetailsInfo();
+
         bookInfo.setTitle(title);
         bookInfo.setAuthor(author);
         bookInfo.setPublisher(publisher);
@@ -104,10 +105,6 @@ public class AddBooksController {
                 return "addBook";
             }
 
-
-
-
-
         }
 
 
@@ -118,7 +115,7 @@ public class AddBooksController {
             boolean isValid = isbn.matches("^[0-9]*$");
             //isbnが10桁or13桁、半角数字かチェック
             int isbnNum = isbn.length();
-            if (!isIsbnValid) {
+            if (!isValid) {
                 model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
                 return "addBook";
             } else if (isbnNum != 10 || isbnNum != 13) {
@@ -126,7 +123,7 @@ public class AddBooksController {
                 return "addBook";
             }
 
-            if (isIsbnValid) {
+            if (isValid) {
                 return "addBook";
             }
         }
@@ -166,6 +163,12 @@ public class AddBooksController {
         //書籍の詳細情報を取得する。 getBookInfo(int bookId)
 
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+
+        //返却ボタンを非活性化する
+        model.addAttribute("ReturnDisable", "disabled");
+
+        //「貸出可」ステータスを表示させる
+        model.addAttribute("RentStatus", "貸出可");
 
         //  詳細画面に遷移する
         return "details";

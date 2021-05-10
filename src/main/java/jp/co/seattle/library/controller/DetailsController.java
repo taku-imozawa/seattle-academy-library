@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.seattle.library.service.BooksService;
+import jp.co.seattle.library.service.LendingService;
 
 /**
  * 詳細表示コントローラー
@@ -23,6 +24,9 @@ public class DetailsController {
 
     @Autowired
     private BooksService bookdService;
+
+    @Autowired
+    private LendingService lendingService;
 
     /**
      * 詳細画面に遷移する
@@ -41,6 +45,34 @@ public class DetailsController {
 
         model.addAttribute("bookDetailsInfo", bookdService.getBookInfo(bookId));
 
+        //書籍がまだ貸し出されていないかチェックするメソッドを呼び出す
+        int idCount = lendingService.lendingConfirmation(bookId);
+
+        // if文でカウントしたidがゼロか1で分岐させる
+        if (idCount == 0) {
+            //「貸出可」ステータスを表示させる
+            model.addAttribute("RentStatus", "貸出可");
+
+            //返却ボタンを非活性化する
+            model.addAttribute("ReturnDisable", "disabled");
+
+        } else {
+            //書籍が貸し出された後は、貸出ボタン非活性化
+            model.addAttribute("RentDisable", "disabled");
+            //「貸出中」ステータスを表示させる
+            model.addAttribute("RentStatus", "貸出中");
+
+            //書籍が貸出中の時は、削除ボタン非活性化
+            model.addAttribute("DeleteDisable", "disabled");
+            //貸出中の書籍は削除できない旨のメッセージを表示
+            model.addAttribute("DeleteError", "※貸出中の書籍は削除できません");
+
+        }
+
+
         return "details";
     }
+
+
+
 }
