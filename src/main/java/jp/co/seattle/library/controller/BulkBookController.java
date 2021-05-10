@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jp.co.seattle.library.dto.BookDetailsInfo;
 import jp.co.seattle.library.service.BooksService;
 
+
 @Controller //APIの入り口
 public class BulkBookController {
     final static Logger logger = LoggerFactory.getLogger(BulkBookController.class);
@@ -45,11 +46,10 @@ public class BulkBookController {
         logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
 
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));) {
             String line;
             ArrayList<BookDetailsInfo> bookInfos = new ArrayList<BookDetailsInfo>();
-            boolean flag = false;
+            boolean isInValid = false;
             String errormsg = "";
 
             int i = 0;
@@ -68,12 +68,12 @@ public class BulkBookController {
 
                 if (!(isTitleValid) || !(isAuthorValid) || !(isPublisherValid) || !(isPublishDateValid)) {
                     errormsg += i + "行目に必須項目が入力されていません\n";
-                    flag = true;
+                    isInValid = true;
 
                 }
                 if (!(isDateValid)) {
                     errormsg += i + "行目の出版日は半角数字で入力してください\n";
-                    flag = true;
+                    isInValid = true;
 
                 }
                 if (isDateValid) {
@@ -85,15 +85,15 @@ public class BulkBookController {
 
                     } catch (ParseException p) {
                         errormsg += i + "行目の日付が正しくありません\n";
-                        flag = true;
+                        isInValid = true;
                     }
 
                 }
 
-                if (data[4] != null && !(data[4].isEmpty())
+                if (!StringUtils.isEmpty(data[4])
                         && !(data[4].matches("([0-9]{10}|[0-9]{13})?"))) {
                     errormsg += i + "行目のISBNは10桁もしくは13桁の数字で入力してください。";
-                    flag = true;
+                    isInValid = true;
                 }
 
                 BookDetailsInfo bookInfo = new BookDetailsInfo();
@@ -107,7 +107,7 @@ public class BulkBookController {
 
                 bookInfos.add(bookInfo);
             }
-            if (flag) {
+            if (isInValid) {
                 model.addAttribute("bulkError", errormsg);
                 return "bulkBooks";
             }
