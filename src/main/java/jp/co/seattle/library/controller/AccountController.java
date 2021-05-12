@@ -53,11 +53,8 @@ public class AccountController {
         logger.info("Welcome createAccount! The client locale is {}.", locale);
 
         // パラメータで受け取った書籍情報をDtoに格納する。
-
         UserInfo userInfo = new UserInfo();
-
         userInfo.setEmail(email);
-
 
         // TODO バリデーションチェック、パスワード一致チェック実装
         boolean isEmailValid = email
@@ -80,8 +77,6 @@ public class AccountController {
             model.addAttribute("passworderror", "パスワードが異なります。");
             return "createAccount";
         }
-
-
 
         userInfo.setPassword(password);
         usersService.registUser(userInfo);
