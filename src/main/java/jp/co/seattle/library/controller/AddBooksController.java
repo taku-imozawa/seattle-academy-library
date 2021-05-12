@@ -89,11 +89,13 @@ public class AddBooksController {
             model.addAttribute("addError", "必須項目が入力されていません");
             return "addBook";
 
-       } else if (!(isDateValid)) {
+        }
+        if (!isDateValid) {
            model.addAttribute("PublisDateError", "出版日は半角数字で入力してください");
            return "addBook";
 
-       } else if (isDateValid) {
+       }
+       if (isDateValid) {
            try {
                DateFormat dt = new SimpleDateFormat("yyyyMMdd");
                dt.setLenient(false);
@@ -118,7 +120,8 @@ public class AddBooksController {
            if (!isValid) {
                model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
                return "addBook";
-           } else if (isbnNum != 10 || isbnNum != 13) {
+           }
+           if (isbnNum != 10 || isbnNum != 13) {
                model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
                return "addBook";
            }
