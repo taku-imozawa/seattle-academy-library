@@ -1,7 +1,5 @@
 package jp.co.seattle.library.controller;
 
-import static org.hamcrest.CoreMatchers.*;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -91,7 +89,7 @@ public class AddBooksController {
             return "addBook";
 
         }
-        if (!(isDateValid)) {
+        if (!isDateValid) {
             model.addAttribute("PublisDateError", "出版日は半角数字で入力してください");
             return "addBook";
 
@@ -100,19 +98,13 @@ public class AddBooksController {
             try {
                 DateFormat dt = new SimpleDateFormat("yyyyMMdd");
                 dt.setLenient(false);
-                // ←ここが画面などからの入力値になる
+
                 dt.parse(publishDate);
 
             } catch (ParseException p) {
                 model.addAttribute("dateError", "日付が正しくありません");
                 return "addBook";
             }
-        }
-
-        if (isbn != null && !(isbn.isEmpty())
-                && !(isbn.matches("([0-9]{10}|[0-9]{13})?"))) {
-            model.addAttribute("isbnError", "行目のISBNは10桁もしくは13桁の数字で入力してください");
-            return "addBook";
         }
 
 

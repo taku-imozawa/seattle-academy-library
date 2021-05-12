@@ -45,7 +45,6 @@ public class BulkBookController {
             Model model) {
         logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
-
         try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));) {
             String line;
             ArrayList<BookDetailsInfo> bookInfos = new ArrayList<BookDetailsInfo>();
@@ -121,7 +120,6 @@ public class BulkBookController {
         } catch (IOException e) {
             String error = "エラーです。";
             return error;
-
 
         } catch (Exception ioe) {
             String error = "エラーです";
