@@ -56,7 +56,6 @@ public class AccountController {
         UserInfo userInfo = new UserInfo();
         userInfo.setEmail(email);
 
-
         // TODO バリデーションチェック、パスワード一致チェック実装
         boolean isEmailValid = email
                 .matches("^([a-zA-Z0-9])+([a-zA-Z0-9\\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\\._-]+)+$");
@@ -78,7 +77,6 @@ public class AccountController {
             model.addAttribute("passworderror", "パスワードが異なります。");
             return "createAccount";
         }
-
 
         userInfo.setPassword(password);
         usersService.registUser(userInfo);

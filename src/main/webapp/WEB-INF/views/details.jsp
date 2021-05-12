@@ -39,9 +39,10 @@
                             <img class="book_noimg" src="resources/img/noImg.png">
                         </c:if> <c:if test="${!empty bookDetailsInfo.thumbnailUrl}">
                             <img class="book_noimg" src="${bookDetailsInfo.thumbnailUrl}">
-                        </c:if> <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">
+                        </c:if> <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">    
                     </a>
                 </div>
+                <p>${RentStatus}</p>
             </div>
             <div class="content_right">
                 <div>
@@ -72,16 +73,19 @@
         </div>
          <div class="edtDelBookBtn_box">
             <form method="post" action="<%=request.getContextPath()%>/rentBook">
-                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_rentBook">借りる</button>
+                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_rentBook" ${RentDisable}>借りる</button>
             </form>
             <form method="post" action="<%=request.getContextPath()%>/returnBook">
-                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_returnBook">返す</button>
+                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_returnBook"${ReturnDisable}>返す</button>
             </form>
             <form method="post" action="<%=request.getContextPath()%>/editBook">
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_editBook">編集</button>
             </form>
              <form method="post" action="<%=request.getContextPath()%>/deleteBook">
-                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_deleteBook">削除</button>
+                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_deleteBook"${DeleteDisable}>削除</button>
+                <c:if test="${!empty DeleteDisable}">
+                        <div class="error">${DeleteError}</div>
+                    </c:if>
             </form>
         </div>
     </main>

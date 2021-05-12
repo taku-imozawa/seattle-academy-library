@@ -68,6 +68,7 @@ public class AddBooksController {
 
         // パラメータで受け取った書籍情報をDtoに格納する。
         BookDetailsInfo bookInfo = new BookDetailsInfo();
+
         bookInfo.setTitle(title);
         bookInfo.setAuthor(author);
         bookInfo.setPublisher(publisher);
@@ -90,81 +91,90 @@ public class AddBooksController {
 
         }
         if (!isDateValid) {
-            model.addAttribute("PublisDateError", "出版日は半角数字で入力してください");
-            return "addBook";
+           model.addAttribute("PublisDateError", "出版日は半角数字で入力してください");
+           return "addBook";
 
-        }
-        if (isDateValid) {
-            try {
-                DateFormat dt = new SimpleDateFormat("yyyyMMdd");
-                dt.setLenient(false);
+       }
+       if (isDateValid) {
+           try {
+               DateFormat dt = new SimpleDateFormat("yyyyMMdd");
+               dt.setLenient(false);
+               // ←ここが画面などからの入力値になる
+               dt.parse(publishDate);
 
-                dt.parse(publishDate);
+           } catch (ParseException p) {
+               model.addAttribute("dateError", "日付が正しくありません");
+               return "addBook";
+           }
 
-            } catch (ParseException p) {
-                model.addAttribute("dateError", "日付が正しくありません");
-                return "addBook";
-            }
-        }
-
-
-        //ISBNが10or13桁
-        boolean isIsbnValid = !!StringUtils.isEmpty(isbn);
-        //isbnがからじゃなかった時、半角数字かどうかチェック
-        if (isIsbnValid) {
-            boolean isValid = isbn.matches("^[0-9]*$");
-            //isbnが10桁or13桁、半角数字かチェック
-            int isbnNum = isbn.length();
-            if (!isValid) {
-                model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
-                return "addBook";
-            }
-            if (isbnNum != 10 || isbnNum != 13) {
-                model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
-                return "addBook";
-            }
+       }
 
 
-        }
+       //ISBNが10or13桁
+       boolean isIsbnValid = !!StringUtils.isEmpty(isbn);
+       //isbnがからじゃなかった時、半角数字かどうかチェック
+       if (isIsbnValid) {
+           boolean isValid = isbn.matches("^[0-9]*$");
+           //isbnが10桁or13桁、半角数字かチェック
+           int isbnNum = isbn.length();
+           if (!isValid) {
+               model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
+               return "addBook";
+           }
+           if (isbnNum != 10 || isbnNum != 13) {
+               model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
+               return "addBook";
+           }
 
-        // クライアントのファイルシステムにある元のファイル名を設定する
-        String thumbnail = file.getOriginalFilename();
+           if (isValid) {
+               return "addBook";
+           }
+       }
 
-        if (!file.isEmpty()) {
-            try {
-                // サムネイル画像をアップロード
-                String fileName = thumbnailService.uploadThumbnail(thumbnail, file);
-                // URLを取得
-                String thumbnailUrl = thumbnailService.getURL(fileName);
+       // クライアントのファイルシステムにある元のファイル名を設定する
+       String thumbnail = file.getOriginalFilename();
 
-                bookInfo.setThumbnailName(fileName);
-                bookInfo.setThumbnailUrl(thumbnailUrl);
+       if (!file.isEmpty()) {
+           try {
+               // サムネイル画像をアップロード
+               String fileName = thumbnailService.uploadThumbnail(thumbnail, file);
+               // URLを取得
+               String thumbnailUrl = thumbnailService.getURL(fileName);
 
-            } catch (Exception e) {
+               bookInfo.setThumbnailName(fileName);
+               bookInfo.setThumbnailUrl(thumbnailUrl);
 
-                // 異常終了時の処理
-                logger.error("サムネイルアップロードでエラー発生", e);
-                model.addAttribute("bookDetailsInfo", bookInfo);
-                return "addBook";
-            }
-        }
+           } catch (Exception e) {
+
+               // 異常終了時の処理
+               logger.error("サムネイルアップロードでエラー発生", e);
+               model.addAttribute("bookDetailsInfo", bookInfo);
+               return "addBook";
+           }
+       }
 
 
-        // 書籍情報を新規登録する
-        booksService.registBook(bookInfo);
+       // 書籍情報を新規登録する
+       booksService.registBook(bookInfo);
 
-        model.addAttribute("resultMessage", "登録完了");
+       model.addAttribute("resultMessage", "登録完了");
 
-        // TODO 登録した書籍の詳細情報を表示するように実装
-        //bookIdを取得するメソッドを使う
-        //        booksService.getBookId();
-        int bookId = booksService.getBookId();
-        //書籍の詳細情報を取得する。 getBookInfo(int bookId)
+       // TODO 登録した書籍の詳細情報を表示するように実装
+       //bookIdを取得するメソッドを使う
+       //        booksService.getBookId();
+       int bookId = booksService.getBookId();
+       //書籍の詳細情報を取得する。 getBookInfo(int bookId)
 
-        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+       model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 
-        //  詳細画面に遷移する
-        return "details";
-    }
+       //返却ボタンを非活性化する
+       model.addAttribute("ReturnDisable", "disabled");
+
+       //「貸出可」ステータスを表示させる
+       model.addAttribute("RentStatus", "貸出可");
+
+       //  詳細画面に遷移する
+       return "details";
+   }
 
 }
