@@ -70,7 +70,7 @@ public class BulkBookController {
                     isInValid = true;
 
                 }
-                if (!(isDateValid)) {
+                if (!isDateValid) {
                     errormsg += i + "行目の出版日は半角数字で入力してください\n";
                     isInValid = true;
 
