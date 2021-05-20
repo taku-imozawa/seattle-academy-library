@@ -77,8 +77,8 @@
                         <c:if test="${empty bookInfo}">
                             <input type="text" name="publishDate" autocomplete="off">
                         </c:if>
-                        <c:if test="${!empty DateError}">
-                            <div class = "error">${DateError}</div>
+                        <c:if test="${!empty dateError}">
+                            <div class = "error">${dateError}</div>
                         </c:if>
                         <c:if test="${!empty PublisDateError}">
                             <div class = "error">${PublisDateError}</div>

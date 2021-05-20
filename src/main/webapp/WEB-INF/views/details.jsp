@@ -43,6 +43,12 @@
                     </a>
                 </div>
                 <p>${RentStatus}</p>
+                  <c:if test="${!empty DeleteDisable}">
+                        <div class="error">${DeleteError}</div>
+                    </c:if>
+                      <c:if test="${!empty EditDisable}">
+                        <div class="error">${EditError}</div>
+                    </c:if>
             </div>
             <div class="content_right">
                 <div>
@@ -79,13 +85,10 @@
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_returnBook"${ReturnDisable}>返す</button>
             </form>
             <form method="post" action="<%=request.getContextPath()%>/editBook">
-                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_editBook">編集</button>
+                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_editBook"${EditDisable}>編集</button>
             </form>
              <form method="post" action="<%=request.getContextPath()%>/deleteBook">
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_deleteBook"${DeleteDisable}>削除</button>
-                <c:if test="${!empty DeleteDisable}">
-                        <div class="error">${DeleteError}</div>
-                    </c:if>
             </form>
         </div>
     </main>

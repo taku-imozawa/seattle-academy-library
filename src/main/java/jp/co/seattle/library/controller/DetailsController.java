@@ -67,6 +67,11 @@ public class DetailsController {
             //貸出中の書籍は削除できない旨のメッセージを表示
             model.addAttribute("DeleteError", "※貸出中の書籍は削除できません");
 
+            //書籍が貸出中の時は、編集ボタン非活性化
+            model.addAttribute("EditDisable", "disabled");
+            //貸出中の書籍は編集できない旨のメッセージを表示
+            model.addAttribute("EditError", "※貸出中の書籍は編集できません");
+
         }
 
 
