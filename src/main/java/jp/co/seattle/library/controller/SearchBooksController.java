@@ -1,5 +1,7 @@
 package jp.co.seattle.library.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.co.seattle.library.dto.BookInfo;
 import jp.co.seattle.library.service.BooksService;
-
 
 @Controller
 public class SearchBooksController {
@@ -24,43 +26,42 @@ public class SearchBooksController {
     /**
      * 書籍を検索する
      *
-     * @param 
-     * @param 
-     * @param 
+     * @param matchType 部分一致ボタンと完全一致ボタンのname
+     * @param keyWord　検索窓に入力された文字
      * 
      */
 
     //検索ボタン押下。ここに飛ぶ
     @Transactional
-    @RequestMapping(value="/searchBook",method=RequestMethod.POST)
+    @RequestMapping(value = "/searchBook", method = RequestMethod.POST)
 
-    public String insertBook(
+    public String searchBook(
             @RequestParam("matchType") String type,
             @RequestParam("keyWord") String searchKeyWord,
             Model model) {
 
+        //完全一致ボタンが選択されている場合
         if (type.equals("perfectMatching")) {
-
-            if (CollectionUtils.isEmpty(booksService.getSearchBookList(searchKeyWord))) {
-
+            List<BookInfo> resultBookList = booksService.getSearchBookList(searchKeyWord);
+            if (CollectionUtils.isEmpty(resultBookList)) {
+                //　該当書籍なしの場合
                 model.addAttribute("searchError", "該当する書籍はありません");
 
-            } else {
-
-                model.addAttribute("bookList", booksService.getSearchBookList(searchKeyWord));
             }
-    }
+            model.addAttribute("bookList", resultBookList);
 
 
-
+        }
+        //部分一致ボタンが選択されている場合
         if (type.equals("partialMatching")) {
-
-            if (CollectionUtils.isEmpty(booksService.getSearchBookList(searchKeyWord))) {
+            List<BookInfo> resultBookList = booksService.getPartiallySearchBookList(searchKeyWord);
+            if (CollectionUtils.isEmpty(resultBookList)) {
+                //　該当書籍なしの場合
                 model.addAttribute("searchError", "該当する書籍はありません");
 
-            } else {
-                model.addAttribute("bookList", booksService.getPartiallySearchBookList(searchKeyWord));
             }
+            model.addAttribute("bookList", resultBookList);
+
         }
 
         return "home";

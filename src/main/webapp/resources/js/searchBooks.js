@@ -1,8 +1,3 @@
-/**
- * 
- */
-/** */
-
 
 $(function(){
 if ($("#sbox").val().length == 0) {

@@ -125,22 +125,22 @@ public class BooksService {
      * @param SearchKeyword 検索窓に入力されたキーワード
      */
     //完全一致検索の場合
-public List<BookInfo> getSearchBookList(String SearchKeyWord) {
+    public List<BookInfo> getSearchBookList(String searchKeyWord) {
 
     List<BookInfo> getedBookList = jdbcTemplate.query(
             "select id,title,author,publisher,publish_date,thumbnail_url from books where title = " + "'"
-                    + SearchKeyWord + "'",
+                        + searchKeyWord + "'",
                 new BookInfoRowMapper());
 
         return getedBookList;
     }
 
     //部分一致検索の場合
-    public List<BookInfo> getPartiallySearchBookList(String SearchKeyWord) {
+    public List<BookInfo> getPartiallySearchBookList(String searchKeyWord) {
 
         List<BookInfo> getedBookList = jdbcTemplate.query(
                 "select id,title,author,publisher,publish_date,thumbnail_url from books where title like '%"
-                        + SearchKeyWord + "%'",
+                        + searchKeyWord + "%'",
                 new BookInfoRowMapper());
 
         return getedBookList;
