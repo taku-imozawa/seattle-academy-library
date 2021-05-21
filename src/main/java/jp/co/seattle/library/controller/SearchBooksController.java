@@ -46,10 +46,10 @@ public class SearchBooksController {
             if (CollectionUtils.isEmpty(resultBookList)) {
                 //　該当書籍なしの場合
                 model.addAttribute("searchError", "該当する書籍はありません");
-
+                return "home";
             }
             model.addAttribute("bookList", resultBookList);
-
+            return "home";
 
         }
         //部分一致ボタンが選択されている場合
@@ -58,10 +58,10 @@ public class SearchBooksController {
             if (CollectionUtils.isEmpty(resultBookList)) {
                 //　該当書籍なしの場合
                 model.addAttribute("searchError", "該当する書籍はありません");
-
+                return "home";
             }
             model.addAttribute("bookList", resultBookList);
-
+            return "home";
         }
 
         return "home";
