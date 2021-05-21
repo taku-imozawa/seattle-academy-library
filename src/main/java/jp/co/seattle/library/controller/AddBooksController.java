@@ -103,34 +103,16 @@ public class AddBooksController {
                dt.parse(publishDate);
 
            } catch (ParseException p) {
-               model.addAttribute("dateError", "日付が正しくありません");
+               model.addAttribute("dateError", "出版日は半角数字のYYYYMMDD形式で入力してください");
                return "addBook";
            }
 
        }
 
-
-       //ISBNが10or13桁
-       boolean isIsbnValid = !!StringUtils.isEmpty(isbn);
-       //isbnがからじゃなかった時、半角数字かどうかチェック
-       if (isIsbnValid) {
-           boolean isValid = isbn.matches("^[0-9]*$");
-           //isbnが10桁or13桁、半角数字かチェック
-           int isbnNum = isbn.length();
-           if (!isValid) {
-               model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
-               return "addBook";
-           }
-           if (isbnNum != 10 || isbnNum != 13) {
-               model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
-               return "addBook";
-           }
-
-           if (isValid) {
-               return "addBook";
-           }
+       if (!StringUtils.isEmpty(isbn) && !(isbn.matches("([0-9]{10}|[0-9]{13})?"))) {
+           model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
+           return "addBook";
        }
-
        // クライアントのファイルシステムにある元のファイル名を設定する
        String thumbnail = file.getOriginalFilename();
 

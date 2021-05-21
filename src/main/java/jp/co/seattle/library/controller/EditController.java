@@ -105,11 +105,13 @@ public class EditController {
             model.addAttribute("addError", "必須項目が入力されていません");
             return "editBook";
 
-        } else if (!(isDateValid)) {
+        }
+        if (!isDateValid) {
             model.addAttribute("PublisDateError", "出版日は半角数字で入力してください");
             return "editBook";
 
-        } else if (isDateValid) {
+        }
+        if (isDateValid) {
             try {
                 DateFormat dt = new SimpleDateFormat("yyyyMMdd");
                 dt.setLenient(false);
@@ -117,29 +119,14 @@ public class EditController {
                 dt.parse(publishDate);
 
             } catch (ParseException p) {
-                model.addAttribute("dateError", "日付が正しくありません");
+                model.addAttribute("dateError", "出版日は半角数字のYYYYMMDD形式で入力してください");
                 return "editBook";
             }
         }
 
-        //ISBNが10or13桁
-        boolean isIsbnValid = !!StringUtils.isEmpty(isbn);
-        //isbnがからじゃなかった時、半角数字かどうかチェック
-        if (isIsbnValid) {
-            boolean isValid = isbn.matches("^[0-9]*$");
-            //isbnが10桁or13桁、半角数字かチェック
-            int isbnNum = isbn.length();
-            if (!isIsbnValid) {
-                model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
-                return "editBook";
-            } else if (isbnNum != 10 || isbnNum != 13) {
-                model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
-                return "editBook";
-            }
-
-            if (isIsbnValid) {
-                return "editBook";
-            }
+        if (!StringUtils.isEmpty(isbn) && !(isbn.matches("([0-9]{10}|[0-9]{13})?"))) {
+            model.addAttribute("isbnError", " ISBNの桁数が違う、または半角数字ではありません");
+            return "editBook";
         }
 
         // クライアントのファイルシステムにある元のファイル名を設定する
@@ -175,6 +162,8 @@ public class EditController {
         //
         // int bookId = booksService.getBookId();
         model.addAttribute("bookDetailsInfo", bookInfo);
+        //貸出ステータスの表示。貸出中の書籍は編集できないように実装するため、貸し出し可を出力
+        model.addAttribute("RentStatus", "貸出可");
 
         //詳細画面に遷移する
         return "details";

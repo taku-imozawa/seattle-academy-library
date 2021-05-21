@@ -61,6 +61,10 @@ public class RentBooksController {
         model.addAttribute("DeleteDisable", "disabled");
         //貸出中の書籍は削除できない旨をメッセージ表示する
         model.addAttribute("DeleteError", "※貸出中の書籍は削除できません");
+        //書籍が貸し出されたら、編集ボタンを非活性化する
+        model.addAttribute("EditDisable", "disabled");
+        //貸出中の書籍は編集できない旨をメッセージ表示する
+        model.addAttribute("EditError", "※貸出中の書籍は編集できません");
         return "details";
         }
 
