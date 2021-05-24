@@ -1,11 +1,14 @@
 
 $(function(){
-if ($("#sbox").val().length == 0) {
+if ($("#sbox").val() == '') {
 $("#sbtn").prop("disabled", true);
 }
-$("#sbox").on("keydown keyup keypress change", function() {
-if ($(this).val().length > 1) {
-$("#sbtn").prop("disabled", false);
-} 
+//入力された時の処理
+$("#sbox").on("change", function() {
+	if($("#sbox").val() != ''){
+		$("#sbtn").prop("disabled", false);
+	}else{
+		$("#sbtn").prop("disabled", true);
+	}
 });
 });
