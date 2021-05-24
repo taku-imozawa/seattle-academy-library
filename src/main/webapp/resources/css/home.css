@@ -137,8 +137,10 @@ img.book_noimg, img.book_img{
 }
 
 .book_publisher, .book_publish_date {
-    font-size: 12px;
-}
+	font-size: 13px;
+    text-align: center;
+    margin-bottom: 5px;
+	}
 
 a.btn_add_book,a.btn_bulk_book, button.btn_addBook,button.btn_editBook, button.btn_deleteBook,button.btn_rentBook,button.btn_returnBook,button.btn_bulkRegist {
     display: inline-block;

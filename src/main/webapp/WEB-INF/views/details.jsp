@@ -15,6 +15,8 @@
 <link rel="stylesheet" href="resources/css/lightbox.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="resources/js/lightbox.js" /></script>
+<script src="resources/js/deleteBooks.js" /></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 </head>
 <body class="wrapper">
     <header>
@@ -88,7 +90,7 @@
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_editBook"${EditDisable}>編集</button>
             </form>
              <form method="post" action="<%=request.getContextPath()%>/deleteBook">
-                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_deleteBook"${DeleteDisable}>削除</button>
+                <button id="deleteDialog" type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_deleteBook"${DeleteDisable}>削除</button>
             </form>
         </div>
     </main>
