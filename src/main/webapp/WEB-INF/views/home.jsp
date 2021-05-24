@@ -32,10 +32,7 @@
         <a href="<%= request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a> <a href="<%= request.getContextPath()%>/bulkBook" class="btn_bulk_book">一括登録</a>
         <div class="content_body">
             <form id="form1" action="<%=request.getContextPath()%>/searchBook" method="post" enctype="multipart/form-data" id="data_upload_form">
-                <input type="radio" name="matchType" value="perfectMatching"checked>完全一致 
-                <input type="radio" name="matchType" value="partialMatching">部分一致
-                <input id="sbox" name="keyWord" type="text" placeholder="キーワードを入力" />
-                <input id="sbtn" type="submit" value="検索"/>
+                <input type="radio" name="matchType" value="perfectMatching" checked>完全一致 <input type="radio" name="matchType" value="partialMatching">部分一致 <input id="sbox" name="keyWord" type="text" placeholder="キーワードを入力" /> <input id="sbtn" type="submit" value="検索" disabled />
             </form>
             <div>
                 <div class="booklist">
@@ -50,16 +47,16 @@
                                 </a> <input type="hidden" name="bookId" value="${bookInfo.bookId}">
                             </form>
                             <ul>
-                                <li class="book_title">${bookInfo.title}</li>
-                                <li class="book_publish_date">${bookInfo.publishDate}</li>
-                                <li class="book_author">${bookInfo.author}</li>
-                                <li class="book_publisher">${bookInfo.publisher}</li>
+                                <li class="book_title">タイトル：${bookInfo.title}</li>
+                                <li class="book_publish_date">出版日：${bookInfo.publishDate}</li>
+                                <li class="book_author">著者：${bookInfo.author}</li>
+                                <li class="book_publisher">出版社：${bookInfo.publisher}</li>
                             </ul>
                         </div>
                     </c:forEach>
-                     <c:if test="${!empty searchError}">
-                            <div class = "error">${searchError}</div>
-                        </c:if>
+                    <c:if test="${!empty searchError}">
+                        <div class="error">${searchError}</div>
+                    </c:if>
                 </div>
             </div>
         </div>

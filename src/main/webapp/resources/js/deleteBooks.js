@@ -8,12 +8,6 @@ $( '#deleteDialog').on('click',function() {
     // submitボタンの効果をキャンセルし、詳細画面に戻る
     return false;
  
- // 「OK」をクリックした際の処理
-  } else {
- 
-    //書籍の削除が実行される
-    return true;
- 
-  }
+  } 
 });
 });
