@@ -28,6 +28,7 @@ public class PossibleRentListController {
 
     //貸出可能書籍一覧ボタンが押されたらここに飛んでくる
     /**
+     * 貸出し可能書籍のデータをDBから持ってきて画面に送る
      * @param model　モデル
      * @return　遷移先画面
      */

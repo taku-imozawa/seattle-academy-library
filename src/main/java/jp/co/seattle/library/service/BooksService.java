@@ -147,8 +147,8 @@ public class BooksService {
     }
 
     //貸出可能な書籍の書籍データを取得する
-    /**貸出し可能な書籍のみを表示する
-     * 
+    /**
+     * 貸出し可能な書籍のみを表示する
      * @return　貸出し可能な書籍リスト
      */
     public List<BookInfo> getPossibleList() {
