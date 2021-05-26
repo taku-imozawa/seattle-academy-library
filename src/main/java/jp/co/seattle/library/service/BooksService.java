@@ -145,4 +145,15 @@ public class BooksService {
 
         return getedBookList;
     }
+
+    //貸出可能な書籍の書籍データを取得する
+    public List<BookInfo> getPossibleList() {
+
+        List<BookInfo> getedBookList = jdbcTemplate.query(
+                "SELECT id,title,author,publisher,publish_date,thumbnail_url FROM books WHERE"
+                        + " NOT EXISTS (SELECT books_id FROM lending WHERE lending.books_id = books.id)ORDER BY title ASC",
+                new BookInfoRowMapper());
+
+        return getedBookList;
+    }
     }
