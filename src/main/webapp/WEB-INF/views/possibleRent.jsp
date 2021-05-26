@@ -2,17 +2,17 @@
 <%@ page session="false"%>
 <%@ page contentType="text/html; charset=utf8"%>
 <%@ page import="java.util.*"%>
+<!DOCTYPE html>
 <html>
 <head>
-<title>ホーム｜シアトルライブラリ｜シアトルコンサルティング株式会社</title>
+<meta charset="UTF-8">
+<title>貸出し可能書籍一覧|シアトルライブラリ|シアトルコンサルティング株式会社</title>
 <link href="<c:url value="/resources/css/reset.css" />" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
 <link href="<c:url value="/resources/css/default.css" />" rel="stylesheet" type="text/css">
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet" type="text/css">
 <link href="<c:url value="/resources/css/BooksSearch.css" />" rel="stylesheet" type="text/css">
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="resources/js/searchBooks.js"></script>
 </head>
 <body class="wrapper">
     <header>
@@ -28,12 +28,8 @@
         </div>
     </header>
     <main>
-        <h1>Home</h1>
-        <a href="<%= request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a> <a href="<%= request.getContextPath()%>/bulkBook" class="btn_bulk_book">一括登録</a> <a href="<%= request.getContextPath()%>/possibleRent" class="btn_possbileRent">貸出し可能書籍一覧</a>
+        <h1>貸出可能書籍一覧</h1>
         <div class="content_body">
-            <form id="form1" action="<%=request.getContextPath()%>/searchBook" method="post" enctype="multipart/form-data" id="data_upload_form">
-                <input type="radio" name="matchType" value="perfectMatching" checked>完全一致 <input type="radio" name="matchType" value="partialMatching">部分一致 <input id="sbox" name="keyWord" type="text" placeholder="キーワードを入力" /> <input id="sbtn" type="submit" value="検索" disabled />
-            </form>
             <div>
                 <div class="booklist">
                     <c:forEach var="bookInfo" items="${bookList}">
@@ -54,8 +50,8 @@
                             </ul>
                         </div>
                     </c:forEach>
-                    <c:if test="${!empty searchError}">
-                        <div class="error">${searchError}</div>
+                    <c:if test="${!empty existError}">
+                        <div class="error">${existError}</div>
                     </c:if>
                 </div>
             </div>

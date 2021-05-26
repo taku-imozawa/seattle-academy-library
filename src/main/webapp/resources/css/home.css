@@ -142,7 +142,7 @@ img.book_noimg, img.book_img{
     margin-bottom: 5px;
 	}
 
-a.btn_add_book,a.btn_bulk_book, button.btn_addBook,button.btn_editBook, button.btn_deleteBook,button.btn_rentBook,button.btn_returnBook,button.btn_bulkRegist {
+a.btn_add_book,a.btn_bulk_book, button.btn_addBook,button.btn_editBook, button.btn_deleteBook, button.btn_rentBook, button.btn_returnBook, button.btn_bulkRegist, a.btn_possbileRent{
     display: inline-block;
     font-size: 16px;
     font-weight: bold;
@@ -174,7 +174,9 @@ button.btn_returnBook {
 button.btn_bulkRegist {
 	background-color: #FF9966;
 }
-
+a.btn_possbileRent{
+	background-color: #8A2BE2;
+}
 a:hover, button:hover {
     opacity: 0.5;
 }
@@ -217,6 +219,10 @@ a:hover, button:hover {
     justify-content: center;
 }
 .button.btn_bulkRegist{
+	    display: flex;
+    justify-content: center;
+}
+.button.btn_possbileRent{
 	    display: flex;
     justify-content: center;
 }
