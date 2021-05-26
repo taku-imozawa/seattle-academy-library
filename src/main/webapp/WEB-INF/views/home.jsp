@@ -39,11 +39,9 @@
                     <c:forEach var="bookInfo" items="${bookList}">
                         <div class="books">
                             <form method="post" class="book_thumnail" action="<%=request.getContextPath()%>/details">
-                                <a href="javascript:void(0)" onclick="this.parentNode.submit();">
-                                   <c:if test="${bookInfo.thumbnail == 'null'}">
+                                <a href="javascript:void(0)" onclick="this.parentNode.submit();"> <c:if test="${bookInfo.thumbnail == 'null'}">
                                         <img class="book_noimg" src="resources/img/noImg.png">
-                                    </c:if> 
-                                    <c:if test="${bookInfo.thumbnail != 'null'}">
+                                    </c:if> <c:if test="${bookInfo.thumbnail != 'null'}">
                                         <img class="book_img" src="${bookInfo.thumbnail}">
                                     </c:if>
                                 </a> <input type="hidden" name="bookId" value="${bookInfo.bookId}">

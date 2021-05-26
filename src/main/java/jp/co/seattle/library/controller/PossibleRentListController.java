@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.seattle.library.dto.BookInfo;
 import jp.co.seattle.library.service.BooksService;
 
+/**
+ * @author Imozawa
+ *
+ */
 @Controller
 public class PossibleRentListController {
     final static Logger logger = LoggerFactory.getLogger(PossibleRentListController.class);
@@ -22,12 +26,11 @@ public class PossibleRentListController {
     @Autowired
     private BooksService booksService;
 
-    /**
-     * 貸出可能な書籍を一覧表示する 
-     * 
-     */
-
     //貸出可能書籍一覧ボタンが押されたらここに飛んでくる
+    /**
+     * @param model　モデル
+     * @return　遷移先画面
+     */
     @Transactional
     @RequestMapping(value = "/possibleRent", method = RequestMethod.GET)
 
