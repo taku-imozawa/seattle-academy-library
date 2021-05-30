@@ -111,11 +111,13 @@ img.book_noimg, img.book_img{
     height:200px;
     width: 200px;
     bottom: 10px;
+    border-radius: 20px 20px 20px 20px;
 }
  img.book_img{
     height:200px;
     width: 200px;
     left: 20px;
+    border-radius: 20px 20px 20px 20px;
 }
 .book_thumnail a {
     position: absolute;
@@ -123,6 +125,7 @@ img.book_noimg, img.book_img{
     left: 0;
     height:100%;
     width: 100%;
+    
 }
 
 .book_title {
@@ -155,9 +158,11 @@ a.btn_add_book,a.btn_bulk_book, button.btn_addBook,button.btn_editBook, button.b
     box-shadow: inset 0 2px 0 rgba(255, 255, 255, .2), 0 2px 2px
         rgba(0, 0, 0, .2);
     color: #fff;
+    border-radius:20px 20px 20px 20px;
 }
 a.btn_bulk_book{
 	background-color: #66cdaa;
+	border-radius:20px 20px 20px 20px;
 }
 button.btn_editBook{
     background-color: #9ec34b;
@@ -176,6 +181,7 @@ button.btn_bulkRegist {
 }
 a.btn_possbileRent{
 	background-color: #8A2BE2;
+	border-radius:20px 20px 20px 20px;
 }
 a:hover, button:hover {
     opacity: 0.5;
@@ -292,6 +298,69 @@ hr.border_add {
 }
 .bulk_form .caution p{
 	color:#fa8072;
+	
+}
+
+.radio{
+	padding:8px 12px;
+}
+
+.serach_contents{
+	display: inline-block;
+}
+
+.searchArea{
+  width          : 290px;              /* BOXの幅               */
+  height         : 30px;               /* BOXの高さ             */
+  margin         : auto;               /* サンプルを中心に寄せ  */
+  letter-spacing : 0.1em;              /* 文字間隔              */
+  font-weight    : bold;               /* 太字                  */
+  line-height    : 0;                  /* 標準の行高さ          */
+  padding:8px 12px;
+}
+ 
+ /* --- テキスト入力欄のSTYLE設定 --- */
+.searchArea .searchText {
+  display        : block;              /* ブロック化            */
+  float          : left;               /* 横並び                */
+  box-sizing     : border-box;         /* 枠線,余白を含んだ長さ */
+  height         : 30px;               /* 入力の高さ            */
+  width          : 205px;              /* 入力の幅              */
+  margin         : 0;                  /* 外余白                */
+  padding        : 0 15px;             /* 内余白                */
+  border         : 2px solid #007fff;  /* 枠線　幅,実践,色      */
+  border-radius  : 15px 0 0 15px;      /* 左上下の角丸          */
+  color          : #333;               /* 文字色                */
+  outline        : 0;                  /* 入力の薄い枠を非表示  */
+  font-size      : 18px;               /* フォントサイズ        */
+  background-color:#DCDCDC;
+}
+ 
+ /* --- 検索ボタン欄のSTYLE設定 --- */
+.searchArea .searchButton {
+  float          : left;               /* 横並び                */
+  box-sizing     : border-box;         /* 枠線,余白を含んだ長さ */
+  height         : 30px;               /* 入力の高さ            */
+  margin         : 0;                  /* 外余白                */
+  padding        : 6px 10px;           /* 内余白                */
+  border         : none;               /* 枠線　幅,実践,色      */
+  border-radius  : 0 15px 15px 0;      /* 右上下の角丸          */
+  background     : #007fff;            /* ボタンの色            */
+  color          : 	#FF773E;               /* 文字色                */
+  cursor         : pointer;            /* カーソル設定          */
+  line-height    : 18px;               /* 1行の高さ             */
+  font-size      : 18px;               /* フォントサイズ        */
+}
+ 
+ /* --- 検索ボタン欄にフォーカスか来たとき --- */
+.searchArea .searchText:focus {
+  background     : #cfe7ff;            /* フォーカス時の背景色  */
+}
+ 
+ /* --- IEの入力エリア右側×消し -------------------------*/
+.searchArea .searchText::-ms-clear {
+  display        : none;               /* ×を消す              */
 }
 
 
+ 

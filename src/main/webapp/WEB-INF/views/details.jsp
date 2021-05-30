@@ -37,20 +37,20 @@
             <div class="content_left">
                 <span>書籍の画像</span>
                 <div class="book_thumnail">
-                    <a href="${bookDetailsInfo.thumbnailUrl}" data-lightbox="image-1"> <c:if test="${empty bookDetailsInfo.thumbnailUrl}">
+                    <a href="${bookDetailsInfo.thumbnailUrl}" data-lightbox="image-1"> <c:if test="${bookDetailsInfo.thumbnailUrl == 'null'}">
                             <img class="book_noimg" src="resources/img/noImg.png">
-                        </c:if> <c:if test="${!empty bookDetailsInfo.thumbnailUrl}">
+                        </c:if> <c:if test="${bookDetailsInfo.thumbnailUrl != 'null'}">
                             <img class="book_noimg" src="${bookDetailsInfo.thumbnailUrl}">
-                        </c:if> <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">    
+                        </c:if> <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">
                     </a>
                 </div>
                 <p>${RentStatus}</p>
-                  <c:if test="${!empty DeleteDisable}">
-                        <div class="error">${DeleteError}</div>
-                    </c:if>
-                      <c:if test="${!empty EditDisable}">
-                        <div class="error">${EditError}</div>
-                    </c:if>
+                <c:if test="${!empty DeleteDisable}">
+                    <div class="error">${DeleteError}</div>
+                </c:if>
+                <c:if test="${!empty EditDisable}">
+                    <div class="error">${EditError}</div>
+                </c:if>
             </div>
             <div class="content_right">
                 <div>
@@ -79,18 +79,18 @@
                 </div>
             </div>
         </div>
-         <div class="edtDelBookBtn_box">
+        <div class="edtDelBookBtn_box">
             <form method="post" action="<%=request.getContextPath()%>/rentBook">
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_rentBook" ${RentDisable}>借りる</button>
             </form>
             <form method="post" action="<%=request.getContextPath()%>/returnBook">
-                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_returnBook"${ReturnDisable}>返す</button>
+                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_returnBook" ${ReturnDisable}>返す</button>
             </form>
             <form method="post" action="<%=request.getContextPath()%>/editBook">
-                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_editBook"${EditDisable}>編集</button>
+                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_editBook" ${EditDisable}>編集</button>
             </form>
-             <form method="post" action="<%=request.getContextPath()%>/deleteBook">
-                <button id="deleteDialog" type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_deleteBook"${DeleteDisable}>削除</button>
+            <form method="post" action="<%=request.getContextPath()%>/deleteBook">
+                <button id="deleteDialog" type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_deleteBook" ${DeleteDisable}>削除</button>
             </form>
         </div>
     </main>
